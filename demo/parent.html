@@ -37,23 +37,24 @@
     <pre id="output" class="alert alert-warning"></pre>
 </div>
 <script>
-    var messenger = new Messenger('parent', 'MessengerDemo'),
+    var messenger = new Messenger('parent2', 'MessengerDemo'),
         iframe1 = document.getElementById('iframe1'),
         iframe2 = document.getElementById('iframe2'),
         input = document.getElementById('message');
 
-    messenger.listen(function (msg) { // 监听数据变化
+    messenger.listen(function (msg) { // 监听接收到数据
+        console.log('接收到消息')
         var newline = '\n';
         var text = document.createTextNode(msg + newline);
         document.getElementById('output').appendChild(text);
     });
 
-    messenger.addTarget(iframe1.contentWindow, 'iframe1');
+    messenger.addTarget(iframe1.contentWindow, 'iframe1'); // 添加消息对象，明确iframe Window引用名字
     messenger.addTarget(iframe2.contentWindow, 'iframe2');
 
     function sendMessage(name) {
         var msg = input.value;
-        messenger.targets[name].send("message from parent: " + msg);
+        messenger.targets[name].send("message from parent: " + msg); // 向指定的iframe 的window 发送消息
         input.value = '';
     }
 
